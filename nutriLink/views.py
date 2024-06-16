@@ -29,3 +29,15 @@ def recipe(request, recipe_id):
 def user(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     return render(request, "nutriLink/user.html", {'user': user})
+
+def recipe_form(request, user_id):
+    try:
+        user = User.objects.get(pk=user_id)
+    except User.DoesNotExist:
+        raise Http404('User does not exist') # NIEZSLOGOWANY UŻYTKOWNIK
+    return render(request, "nutriLink/recipe_form.html", {'user': user})
+
+def user_form(request):
+    message = "Sign up"
+    context = {'message': message}
+    return render(request, "nutriLink/user_form.html", context)
