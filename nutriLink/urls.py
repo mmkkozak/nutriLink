@@ -2,6 +2,8 @@ from django.urls import path
 
 from . import views
 
+app_name = 'nutriLink'
+
 urlpatterns = [
     path("", views.index, name="index"),
 
@@ -11,5 +13,9 @@ urlpatterns = [
 
     path("<int:user_id>/recipe_form/", views.recipe_form, name="recipe_form"),
 
-    path("user_form/", views.user_form, name="user_form")
+    path("user_form/", views.user_form, name="user_form"),
+
+    path("sign_up/", views.get_new_user, name="sign_up"),
+
+    path('insert_user/', views.insertUser, name='insert_user')
 ]
