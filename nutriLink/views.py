@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.template import loader
 from django.urls import reverse
 
-from nutriLink.forms import SignUpForm
+from nutriLink.forms import SignUpForm, LoginForm
 from nutriLink.models import Recipe, Diet, User
 
 
@@ -64,7 +64,6 @@ def results(request, recipe_id):
 
 
 def get_new_user(request):
-
     if request.method == 'POST':
         form = SignUpForm(request.POST)
     else:
@@ -83,9 +82,33 @@ def insertUser(request):
                 user_password = request.POST['user_password']
                 NewUser = User(name=user_name, email=user_email, password=user_password)
                 NewUser.save()
-                return HttpResponse("User added successfully")
+                return render(request, "nutriLink/sign_up.html", {"message": "User added successfully", "form": form})
             else:
-                return HttpResponse("Passwords don't match")
+                return render(request, "nutriLink/sign_up.html", {"message": "Passwords don't match", "form": form})
         else:
             return HttpResponse("Insert data!")
+
+
+def loginUser(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+    else:
+        form = LoginForm()
+
+    return render(request, "nutriLink/sign_in.html", {"form": form})
+
+
+def verify_user(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            name = request.POST['user_name']
+            try:
+                q = User.objects.get(name=name)
+                if q.password == request.POST['user_password']:
+                    return render(request, "nutriLink/redirect.html", {"value": q.id})
+                else:
+                    return HttpResponse("Username or password are incorrect")
+            except:
+                return render(request, "nutriLink/sign_in.html", {"form": form, "message": "Username or password is incorrect"})
 

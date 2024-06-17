@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<form action = "{% url 'nutriLink:insert_user' %}" method="post">
+<form action = "{% url 'nutriLink:verify_user' %}" method="post">
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Submit">

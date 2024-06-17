@@ -17,5 +17,10 @@ urlpatterns = [
 
     path("sign_up/", views.get_new_user, name="sign_up"),
 
-    path('insert_user/', views.insertUser, name='insert_user')
+    path('insert_user/', views.insertUser, name='insert_user'),
+
+    path('sign_in/', views.loginUser, name='sign_in'),
+
+    path('redirect/', views.verify_user, name='verify_user')
+
 ]
