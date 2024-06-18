@@ -21,9 +21,9 @@ def index(request):
     if request.session['user_id'] != "":
         q = User.objects.get(id=request.session['user_id'])
         name = q.name
-        context = {'recipe_list': recipe_list, 'user': name, 'user_id': request.session['user_id']}
+        context = {'recipe_list': recipe_list, 'user': name, 'user_id': request.session['user_id'], 'action': "nutriLink:logout", 'actionMessage': "Log Out"}
     else:
-        context = {'recipe_list': recipe_list}
+        context = {'recipe_list': recipe_list, 'action': "nutriLink:sign_in", 'actionMessage': "Sign In"}
     return HttpResponse(templete.render(context, request))
 
 
@@ -138,3 +138,7 @@ def insert_recipe(request, user_id):
         else:
             return render(request, 'nutriLink/recipe_form.html', {"form": form, "message": "Insert valid recipe details",'user_id': request.session["user_id"]})
 
+
+def logout(request):
+    if request.session["user_id"] != "":
+        del request.session['user_id']

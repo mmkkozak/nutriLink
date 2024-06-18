@@ -15,8 +15,8 @@
     <p>No recipes are available.</p>
 {% endif %}
 <br>
-Zalogowano jako {{ user }}
+Zalogowano jako {{ user }}<br>
 <a href="/nutriLink/sign_up/">Sign Up</a><br>
-<a href="/nutriLink/sign_in/">Sign In</a><br>
+<a href={{ action }}>{{ actionMessage }}</a><br>
 <a href="/nutriLink/{{ user_id }}/user/">My Profile</a>
 </html>
