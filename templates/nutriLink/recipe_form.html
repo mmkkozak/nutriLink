@@ -6,9 +6,15 @@
 </head>
 <body>
 
-<form>
-    kdurh
+<form action = "{% url 'nutriLink:insert_recipe' user_id%}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
 </form>
+<br>
+{{ message }}
+<br>
+<a href={% url 'nutriLink:index' %}>Return to main page</a>
 
 </body>
 </html>

@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-    AAA
+    {% csrf_token %}
+    <a href={% url 'nutriLink:recipe_form' user_id %}>Add Recipe</a>
 </body>
 </html>

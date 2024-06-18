@@ -11,7 +11,7 @@ urlpatterns = [
 
     path("<int:user_id>/user/", views.user, name="user"),
 
-    path("<int:user_id>/recipe_form/", views.recipe_form, name="recipe_form"),
+    path("<int:user_id>/recipe_form/", views.new_recipe, name="recipe_form"),
 
     path("user_form/", views.user_form, name="user_form"),
 
@@ -21,6 +21,8 @@ urlpatterns = [
 
     path('sign_in/', views.loginUser, name='sign_in'),
 
-    path('redirect/', views.verify_user, name='verify_user')
+    path('redirect/', views.verify_user, name='verify_user'),
+
+    path('<int:user_id>/recipe_form/', views.insert_recipe, name='insert_recipe')
 
 ]

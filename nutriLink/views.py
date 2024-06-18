@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.template import loader
 from django.urls import reverse
 
-from nutriLink.forms import SignUpForm, LoginForm
+from nutriLink.forms import SignUpForm, LoginForm, RecipeForm
 from nutriLink.models import Recipe, Diet, User
 
 
@@ -18,7 +18,12 @@ def index(request):
     # recipe_list = Diet.objects.filter()
     templete = loader.get_template('nutriLink/index.html')
     # output = ", ".join([q.diet_name for q in recipe_list])
-    context = {'recipe_list': recipe_list, }
+    if request.session['user_id'] != "":
+        q = User.objects.get(id=request.session['user_id'])
+        name = q.name
+        context = {'recipe_list': recipe_list, 'user': name, 'user_id': request.session['user_id']}
+    else:
+        context = {'recipe_list': recipe_list}
     return HttpResponse(templete.render(context, request))
 
 
@@ -41,7 +46,7 @@ def recipe(request, recipe_id):
 
 def user(request, user_id):
     user = get_object_or_404(User, pk=user_id)
-    return render(request, "nutriLink/user.html", {'user': user})
+    return render(request, "nutriLink/user.html", {'user': user, 'user_id': user_id})
 
 
 def recipe_form(request, user_id):
@@ -106,9 +111,31 @@ def verify_user(request):
             try:
                 q = User.objects.get(name=name)
                 if q.password == request.POST['user_password']:
+                    request.session["user_id"] = q.id
                     return render(request, "nutriLink/redirect.html", {"value": q.id})
                 else:
                     return HttpResponse("Username or password are incorrect")
             except:
                 return render(request, "nutriLink/sign_in.html", {"form": form, "message": "Username or password is incorrect"})
+
+
+def new_recipe(request, user_id):
+    form = RecipeForm(request.POST or None)
+    return render(request, 'nutriLink/recipe_form.html', {"form": form, 'user_id': request.session["user_id"]})
+
+
+def insert_recipe(request, user_id):
+    if request.method == 'POST':
+        form = RecipeForm(request.POST)
+        template_name = "nutriLink/" + str(request.session["user_id"]) + "/recipe_form.html"
+        if form.is_valid():
+            recipe_name = request.POST['recipe_name']
+            contents = request.POST['contents']
+            picture = request.POST['picture']
+            pub_date = request.POST['pub_date']
+            new_recipe = Recipe(recipe_name=recipe_name, contents=contents, picture=picture, pub_date=pub_date, user_id=request.session["user_id"])
+            new_recipe.save()
+            return render(request, template_name, {"form": form, "message": "New recipe added successfully"})
+        else:
+            return render(request, template_name, {"form": form, "message": "Insert valid recipe details"})
 
