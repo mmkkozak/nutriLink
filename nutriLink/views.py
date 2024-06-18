@@ -127,7 +127,6 @@ def new_recipe(request, user_id):
 def insert_recipe(request, user_id):
     if request.method == 'POST':
         form = RecipeForm(request.POST)
-        template_name = "nutriLink/" + str(request.session["user_id"]) + "/recipe_form.html"
         if form.is_valid():
             recipe_name = request.POST['recipe_name']
             contents = request.POST['contents']
@@ -135,7 +134,7 @@ def insert_recipe(request, user_id):
             pub_date = request.POST['pub_date']
             new_recipe = Recipe(recipe_name=recipe_name, contents=contents, picture=picture, pub_date=pub_date, user_id=request.session["user_id"])
             new_recipe.save()
-            return render(request, template_name, {"form": form, "message": "New recipe added successfully"})
+            return render(request, 'nutriLink/recipe_form.html', {"form": form, "message": "New recipe added successfully",'user_id': request.session["user_id"]})
         else:
-            return render(request, template_name, {"form": form, "message": "Insert valid recipe details"})
+            return render(request, 'nutriLink/recipe_form.html', {"form": form, "message": "Insert valid recipe details",'user_id': request.session["user_id"]})
 

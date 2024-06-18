@@ -23,6 +23,6 @@ urlpatterns = [
 
     path('redirect/', views.verify_user, name='verify_user'),
 
-    path('<int:user_id>/recipe_form/', views.insert_recipe, name='insert_recipe')
+    path('<int:user_id>/insert_recipe/', views.insert_recipe, name='insert_recipe')
 
 ]
