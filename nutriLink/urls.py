@@ -14,5 +14,6 @@ urlpatterns = [
 
     # path("contact/", views.contact, name="contact"),
     path('new/', views.new_recipe, name="new_recipe"),
-    path('<int:pk>/', views.recipe, name="recipe")
+    path('<int:pk>/', views.recipe, name="recipe"),
+    path('profile/', views.profile, name="user")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

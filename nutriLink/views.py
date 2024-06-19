@@ -122,7 +122,6 @@ def recipe(request, pk):
             },
         )
 
-
 @login_required
 def new_recipe(request):
     if request.method == 'POST':
@@ -139,4 +138,12 @@ def new_recipe(request):
     return render(request, 'nutriLink/recipe_form.html', {
         'form': form,
         'title': 'Dodaj przepis',
+    })
+
+@login_required
+def profile(request):
+    recipes = Recipe.objects.filter(user=request.user)
+
+    return render(request, 'nutriLink/user.html', {
+        'recipes': recipes,
     })
