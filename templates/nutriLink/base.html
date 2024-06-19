@@ -9,14 +9,19 @@
 <body>
 
 <nav class="py-6 px-6 flex justify-between items-center border-b border-gray-200">
-    <a href="/" class="text-xl font-semibold">nutriLink</a>
+    <a href="/nutriLink/" class="text-xl font-semibold">nutriLink</a>
 
     <div class="space-x-6">
         <a href="#" class="text-lg font-semibold hover:text-gray-500">New item</a>
         <a href="#" class="text-lg font-semibold hover:text-gray-500">Browse</a>
 
-        <a href="#" class="px-3 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Sign up</a>
-        <a href="#" class="px-3 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Log in</a>
+        {% if request.user.is_authenticated %}
+            <a href="#" class="px-3 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Inbox</a>
+            <a href="#" class="px-3 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Dashboard</a>
+        {% else %}
+            <a href="{% url 'nutriLink:signup' %}" class="px-3 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Sign up</a>
+            <a href="{% url 'nutriLink:login' %}" class="px-3 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Log in</a>
+        {% endif %}
 
     </div>
 </nav>
@@ -29,7 +34,7 @@
     <div class="w-2/3 pr-10">
         <h3 class="mb-5 font-semibold text-gray-400">About</h3>
 
-        <p class="text-lg text-gray-500">To change in base.html</p>
+        <p class="text-lg text-gray-500">This website was created for people with different diet requirements, where everyone, no matter what they like or can eat will find something for themselves! Feel free to add your own recipes to share them with others!</p>
     </div>
 
     <div class="w-1/3">

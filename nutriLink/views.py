@@ -1,8 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
-from nutriLink.forms import SignUpForm, LoginForm, RecipeForm
+from nutriLink.forms import SignupForm, LoginForm, RecipeForm
 from nutriLink.models import Recipe, Diet, User
+from .forms import SignupForm
 
 """
 def index(request):
@@ -66,7 +67,7 @@ def get_new_user(request):
     else:
         form = SignUpForm()
 
-    return render(request, "nutriLink/sign_up.html", {"form": form})
+    return render(request, "nutriLink/signup.html", {"form": form})
 
 
 def insertUser(request):
@@ -79,9 +80,9 @@ def insertUser(request):
                 user_password = request.POST['user_password']
                 NewUser = User(name=user_name, email=user_email, password=user_password)
                 NewUser.save()
-                return render(request, "nutriLink/sign_up.html", {"message": "User added successfully", "form": form})
+                return render(request, "nutriLink/signup.html", {"message": "User added successfully", "form": form})
             else:
-                return render(request, "nutriLink/sign_up.html", {"message": "Passwords don't match", "form": form})
+                return render(request, "nutriLink/signup.html", {"message": "Passwords don't match", "form": form})
         else:
             return HttpResponse("Insert data!")
 
@@ -146,8 +147,8 @@ def index(request):
         'diets': diets
     })
 
-# def contact(request):
-#     return render(request, 'nutriLink/contact.html')
+ # def contact(request):
+ #    return render(request, 'nutriLink/contact.html')
 
 def recipe(request, pk):
     recipe = get_object_or_404(Recipe, pk=pk)
@@ -166,3 +167,18 @@ def recipe(request, pk):
         return render(request, 'nutriLink/recipe.html', {
             'recipe': recipe,
         })
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect('/login/')
+    else:
+        form = SignupForm()
+
+    return render(request, 'nutriLink/signup.html',{
+        'form': form
+    })
