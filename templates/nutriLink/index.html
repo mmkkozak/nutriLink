@@ -5,16 +5,19 @@
 {% block content %}
     <div class="mt-6 px-6 py-6 bg-gray-100 rounded-xl">
 
-        <div class="grid grid-cols-3 gap-3">
-            
+        <div class="grid grid-cols-2 gap-3">
 {#            The drop-down list is defined outside the form element, but will be submitted with the form.#}
-            <label for="diets">Filtruj:</label>
-            <select id="diets" name="dietlist" form="#">
+            <select name="dietlist" form="filter" class="py-2 px-2 rounded-xl">
                 <option>--wybierz dietę--</option>
                 {% for diet in diets %}
-                    <option value="{{ diet.diet_id }}">{{ diet.diet_name }}</option>
+                    <option value="{{ diet.id }}">{{ diet.diet_name }}</option>
                 {% endfor %}
             </select>
+        
+            <form method="get" action="{% url 'nutriLink:index' %}" id="filter">
+                <button class="mt-2 py-4 px-8 text-lg bg-gray-500 text-white rounded-xl">Filtruj</button>
+            </form>
+            
         </div>
     </div>
     

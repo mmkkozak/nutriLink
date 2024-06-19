@@ -3,13 +3,17 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from nutriLink.forms import SignupForm, LoginForm, NewRecipeForm
-from nutriLink.models import Recipe, Diet, Review
+from nutriLink.models import Recipe, Diet, Review, Exclusion
 
 
 def index(request):
     recipes = Recipe.objects.all()
     diets = Diet.objects.all()
-    
+    query = request.GET.get('dietlist', '')
+
+    if query:
+        recipes = recipes.filter()
+
     if request.method == 'POST':
         logout(request)
         del request.session['user_id']
@@ -17,7 +21,8 @@ def index(request):
 
     return render(request, 'nutriLink/index.html',{
         'recipes': recipes,
-        'diets': diets
+        'diets': diets,
+        'query': query,
     })
 
 def signup(request):
