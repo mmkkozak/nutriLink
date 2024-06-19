@@ -1,52 +1,14 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
-from nutriLink.forms import SignUpForm, LoginForm, RecipeForm
+from nutriLink.forms import SignUpForm, LoginForm, NewRecipeForm
 from nutriLink.models import Recipe, Diet, User
 
 """
-def index(request):
-    recipe_list = Recipe.objects.order_by('-pub_date')
-    # recipe_list = Diet.objects.filter()
-    templete = loader.get_template('nutriLink/index.html')
-    # output = ", ".join([q.diet_name for q in recipe_list])
-    if 'user_id' in request.session:
-        q = User.objects.get(id=request.session['user_id'])
-        name = q.name
-        context = {'recipe_list': recipe_list, 'user': name, 'user_id': request.session['user_id'], 'action': "nutriLink:logout", 'actionMessage': "Log Out"}
-    else:
-        context = {'recipe_list': recipe_list, 'action': "nutriLink:sign_in", 'actionMessage': "Sign In"}
-    return HttpResponse(templete.render(context, request))
-
-
-def recipe(request, recipe_id):
-    recipe = get_object_or_404(Recipe, pk=recipe_id)
-    try:
-        selected_recipe = Recipe.objects.get(pk=request.POST["choice"])
-    except (KeyError, Recipe.DoesNotExist):
-        return render(
-            request,
-            "nutriLink/recipe.html",
-            {
-                'recipe': recipe,
-                'error_message': "You didn't select a choice.",
-            },
-        )
-    else:
-        return HttpResponseRedirect(reverse("nutriLink:results", args=(selected_recipe.id,)))
-
-
 def user(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     return render(request, "nutriLink/user.html", {'user': user, 'user_id': user_id})
-
-
-def recipe_form(request, user_id):
-    try:
-        user = request.user
-    except User.DoesNotExist:
-        raise Http404('User does not exist')  # NIEZSLOGOWANY UŻYTKOWNIK
-    return render(request, "nutriLink/recipe_form.html", {'user': user})
 
 
 def user_form(request):
@@ -111,11 +73,6 @@ def verify_user(request):
                 return render(request, "nutriLink/sign_in.html", {"form": form, "message": "Username or password is incorrect"})
 
 
-def new_recipe(request, user_id):
-    form = RecipeForm(request.POST or None)
-    return render(request, 'nutriLink/recipe_form.html', {"form": form, 'user_id': request.session["user_id"]})
-
-
 def insert_recipe(request, user_id):
     if request.method == 'POST':
         form = RecipeForm(request.POST)
@@ -152,17 +109,34 @@ def index(request):
 def recipe(request, pk):
     recipe = get_object_or_404(Recipe, pk=pk)
     try:
-        selected_recipe = Recipe.objects.get(pk=request.POST["choice"])
+        return render(request, 'nutriLink/recipe.html', {
+            'recipe': recipe,
+        })
     except (KeyError, Recipe.DoesNotExist):
         return render(
             request,
             "nutriLink/recipe.html",
             {
                 'recipe': recipe,
-                'error_message': "You didn't select a choice.",
+                'error_message': "Przepis nie istnieje.",
             },
         )
+
+
+@login_required
+def new_recipe(request):
+    if request.method == 'POST':
+        form = NewRecipeForm(request.POST, request.FILES)
+        if form.is_valid():
+            recipe = form.save(commit=False)
+            recipe.user = request.user
+            recipe.save()
+
+            return redirect('nutriLink:recipe', pk=recipe.id)
     else:
-        return render(request, 'nutriLink/recipe.html', {
-            'recipe': recipe,
-        })
+        form = NewRecipeForm()
+
+    return render(request, 'nutriLink/recipe_form.html', {
+        'form': form,
+        'title': 'Dodaj przepis',
+    })
