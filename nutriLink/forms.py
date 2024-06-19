@@ -1,14 +1,10 @@
 from django import forms
 from datetime import datetime
-from django.db import models
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from .models import Recipe
 
-class RecipeForm(forms.Form):
-    recipe_name = forms.CharField(label="Recipe Name", max_length=150)
-    contents = forms.CharField(label="Contents")
-    picture = forms.CharField(label="Picture")
-    pub_date = forms.DateTimeField(label="DateTime")
+INPUT_CLASSES = 'w-full py-4 px-6 rounded-xl border'
 
 class SignupForm(UserCreationForm):
     class Meta:
@@ -41,7 +37,24 @@ class LoginForm(AuthenticationForm):
         "class": 'w-full py-4 px-6 rounded-xl'
     }))
 
-    password = forms.CharField(widget=forms.PasswordInput(attrs={
-        "placeholder": "Your password",
-        "class": 'w-full py-4 px-6 rounded-xl'
-    }))
+class NewRecipeForm(forms.ModelForm):
+    class Meta:
+        model = Recipe
+        fields = ('recipe_name', 'contents', 'picture')
+
+        widgets = {
+            'recipe_name': forms.TextInput(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'contents': forms.Textarea(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'picture': forms.FileInput(attrs={
+                'class': INPUT_CLASSES
+            })
+        }
+    # recipe_name = forms.CharField(label="Recipe Name", max_length=150)
+    # contents = forms.CharField(label="Contents")
+    # picture = forms.CharField(label="Picture")
+    # pub_date = forms.DateTimeField(label="DateTime")
+

@@ -11,7 +11,7 @@ class User(models.Model):
 
 class Recipe(models.Model):
     recipe_name = models.CharField(max_length=150, unique=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='recipes', on_delete=models.CASCADE)
     contents = models.TextField()
     picture = models.ImageField(upload_to='uploads/')
     pub_date = models.DateTimeField(auto_now_add=True)
