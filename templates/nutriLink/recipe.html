@@ -3,15 +3,21 @@
 {% block title %} {{ recipe.recipe_name }} {% endblock %}
 
 {% block content %}
-<h1 class="mb-6 text-3xl">{{ recipe.recipe_name }}</h1>
+    
 <div class="grid grid-cols-5 gap-6">
+
+    <div class="col-span-3 p-6 bg-gray-100 rounded-xl">
+        <h1 class="mb-6 text-3xl">{{ recipe.recipe_name }}</h1>
+        <p class="text-gray-500"><strong>Autor: </strong>{{ item.user.username }}</p>
+        <br>
+        <p>{{ recipe.contents }}</p>
+    </div>
+    
     <div class="col-span-2">
         <img src="{{ recipe.picture.url }}" class="rounded-xl">
     </div>
 
-    <div class="col-span-3 p-6 bg-gray-100 rounded-xl">
-        Treść
-    </div>
+    
 </div>
 
 
