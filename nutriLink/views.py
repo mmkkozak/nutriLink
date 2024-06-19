@@ -43,7 +43,7 @@ def user(request, user_id):
     return render(request, "nutriLink/user.html", {'user': user, 'user_id': user_id})
 
 
-def recipe_form(request):
+def recipe_form(request, user_id):
     try:
         user = request.user
     except User.DoesNotExist:
@@ -113,7 +113,7 @@ def verify_user(request):
                 return render(request, "nutriLink/sign_in.html", {"form": form, "message": "Username or password is incorrect"})
 
 
-def new_recipe(request):
+def new_recipe(request, user_id):
     form = RecipeForm(request.POST or None)
     return render(request, 'nutriLink/recipe_form.html', {"form": form, 'user_id': request.session["user_id"]})
 

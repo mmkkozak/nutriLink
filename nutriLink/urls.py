@@ -11,7 +11,7 @@ urlpatterns = [
 
     path("<int:user_id>/user/", views.user, name="user"),
 
-    path("recipe_form/", views.new_recipe, name="recipe_form"),
+    path("<int:user_id>/recipe_form/", views.new_recipe, name="recipe_form"),
 
     path("user_form/", views.user_form, name="user_form"),
 
