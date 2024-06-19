@@ -1,6 +1,4 @@
-from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.template import loader
 from django.urls import reverse
 
 from nutriLink.forms import SignUpForm, LoginForm, RecipeForm
@@ -142,8 +140,10 @@ def logout(request):
 
 def index(request):
     recipes = Recipe.objects.all()
+    diets = Diet.objects.all()
     return render(request, 'nutriLink/index.html',{
-        'recipes': recipes
+        'recipes': recipes,
+        'diets': diets
     })
 
 def contact(request):

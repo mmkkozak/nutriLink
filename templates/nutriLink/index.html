@@ -4,7 +4,23 @@
 
 {% block content %}
     <div class="mt-6 px-6 py-6 bg-gray-100 rounded-xl">
-        <h2 class="mb-12 text-2xl text-center">Our recipes</h2>
+        <h3 class="mb-12 text-2xl text-center">Wybierz dietę</h3>
+
+        <div class="grid grid-cols-3 gap-3">
+            
+{#            The drop-down list is defined outside the form element, but will be submitted with the form.#}
+            <label for="diets">Filtruj:</label>
+            <select id="diets" name="dietlist" form="#">
+                <option>--wybierz dietę--</option>
+                {% for diet in diets %}
+                    <option value="{{ diet.diet_id }}">{{ diet.diet_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    
+    <div class="mt-6 px-6 py-6 bg-gray-100 rounded-xl">
+        <h2 class="mb-12 text-2xl text-center">Przepisy</h2>
 
         <div class="grid grid-cols-3 gap-3">
             {% for item in recipes %}
@@ -14,7 +30,8 @@
                             <h2 class="text-2xl">{{ item.recipe_name }}</h2>
                         </div>
                         <div>
-                            <img src="{{ item.picture.url }}" class="rounded-t-xl">
+{#                            <img src="{{ item.picture.url }}" class="rounded-t-xl">#}
+                            <img src="https://smakoholik.pl/wp-content/uploads/jajecznica.jpg" class="rounded-t-xl">
                         </div>
                     </a>
                 </div>
