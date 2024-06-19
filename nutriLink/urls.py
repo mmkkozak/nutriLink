@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from django.conf import settings
-from django.conf.urls.static import static
+
 from .forms import LoginForm
 from django.contrib import admin
 
@@ -14,8 +14,9 @@ urlpatterns = [
 
     # path("contact/", views.contact, name="contact"),
     path('signup/', views.signup, name="signup"),
-path('login/', auth_views.LoginView.as_view(template_name='nutriLink/login.html', authentication_form=LoginForm), name='login'),
+    path('login/', auth_views.LoginView.as_view(template_name='nutriLink/login.html', authentication_form=LoginForm), name='login'),
     path('new/', views.new_recipe, name="new_recipe"),
     path('<int:pk>/', views.recipe, name="recipe"),
-    path('profile/', views.profile, name="user")
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('profile/', views.profile, name="user"),
+    path('logout/', auth_views.LogoutView.as_view(), {'next_page' : settings.LOGOUT_REDIRECT_URL}, name='logout')
+]

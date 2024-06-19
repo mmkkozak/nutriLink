@@ -8,6 +8,9 @@
         <h2 class="mb-12 text-2xl text-center">Moje przepisy</h2>
 
         <div class="grid grid-cols-3 gap-3">
+{#            {% if recipes.exists %}#}
+{#                <h2 class="mb-12 font-semibold text-2xl text-center">Nie masz jeszcze żadnych przepisów!</h2>#}
+{#            {% endif %}#}
             {% for item in recipes %}
                 <div>
                     <a href="{% url 'nutriLink:recipe' item.id %}">
@@ -15,8 +18,7 @@
                             <h2 class="text-2xl">{{ item.recipe_name }}</h2>
                         </div>
                         <div>
-                            <img src="nutriLink/{{ item.picture.url }}" class="rounded-t-xl">
-{#                            <img src="https://smakoholik.pl/wp-content/uploads/jajecznica.jpg" class="rounded-t-xl">#}
+                            <img src="{{ item.picture.url }}" class="rounded-t-xl" width="500px">
                         </div>
                     </a>
                 </div>

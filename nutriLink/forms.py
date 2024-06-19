@@ -36,6 +36,10 @@ class LoginForm(AuthenticationForm):
         "placeholder": "Your username",
         "class": 'w-full py-4 px-6 rounded-xl'
     }))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'placeholder': 'Your password',
+        'class': 'w-full py-4 px-6 rounded-xl'
+    }))
 
 class NewRecipeForm(forms.ModelForm):
     class Meta:
@@ -49,9 +53,9 @@ class NewRecipeForm(forms.ModelForm):
             'contents': forms.Textarea(attrs={
                 'class': INPUT_CLASSES
             }),
-            'picture': forms.FileInput(attrs={
-                'class': INPUT_CLASSES
-            })
+            # 'picture': forms.FileInput(attrs={
+            #     'class': INPUT_CLASSES
+            # })
         }
     # recipe_name = forms.CharField(label="Recipe Name", max_length=150)
     # contents = forms.CharField(label="Contents")

@@ -4,7 +4,6 @@
 
 {% block content %}
     <div class="mt-6 px-6 py-6 bg-gray-100 rounded-xl">
-        <h3 class="mb-12 text-2xl text-center">Wybierz dietę</h3>
 
         <div class="grid grid-cols-3 gap-3">
             
@@ -27,11 +26,10 @@
                 <div>
                     <a href="{% url 'nutriLink:recipe' item.id %}">
                         <div class="p-6 bg-white rounded-t-xl">
-                            <h2 class="text-2xl">{{ item.recipe_name }}</h2>
+                            <h2 class="text-2xl font-semibold">{{ item.recipe_name }}</h2>
                         </div>
                         <div>
-                            <img src="nutriLink/{{ item.picture.url }}" class="rounded-t-xl">
-{#                            <img src="https://smakoholik.pl/wp-content/uploads/jajecznica.jpg" class="rounded-t-xl">#}
+                            <img src="{{ item.picture.url }}" class="rounded-t-xl" width="500px">
                         </div>
                     </a>
                 </div>

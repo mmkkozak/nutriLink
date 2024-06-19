@@ -12,13 +12,22 @@
     <a href="/nutriLink" class="text-xl font-semibold">nutriLink</a>
 
     <div class="space-x-6">
-        <a href="{% url 'nutriLink:new_recipe' %}" class="text-lg font-semibold hover:text-gray-500">Dodaj przepis</a>
-        <a href="{% url 'nutriLink:user' %}" class="text-lg font-semibold hover:text-gray-500">Mój profil</a>
-        
-{#        <a href="#" class="text-lg font-semibold hover:text-gray-500">Browse</a>#}
-
-        <a href="#" class="px-3 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Sign up</a>
-        <a href="#" class="px-3 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Log in</a>
+    
+            {% if request.user.is_authenticated %}
+                <div class="grid grid-cols-3 justify-items-center">
+                <a href="{% url 'nutriLink:new_recipe' %}" class="px-3 py-3 text-lg font-semibold hover:text-gray-500">Dodaj przepis</a>
+                <a href="{% url 'nutriLink:user' %}" class="px-3 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Mój profil</a>
+                <form method="post" action="{% url 'nutriLink:logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="px-3 py-3 text-lg bg-gray-500 text-white rounded-xl hover:bg-gray-700">Wyloguj</button>
+                </form>
+                </div>
+            {% else %}
+                <div class="grid grid-cols-2 justify-items-center">
+                <a href="{% url 'nutriLink:signup' %}" class="px-3 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Zarejestruj się</a>
+                <a href="{% url 'nutriLink:login' %}" class="px-3 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Zaloguj się</a>
+                </div>
+            {% endif %}
         
     </div>
 </nav>
