@@ -25,7 +25,7 @@
         <div class="grid grid-cols-3 gap-3">
             {% for item in recipes %}
                 <div>
-                    <a href="#">
+                    <a href="{% url 'nutriLink:recipe' item.id %}">
                         <div class="p-6 bg-white rounded-t-xl">
                             <h2 class="text-2xl">{{ item.recipe_name }}</h2>
                         </div>

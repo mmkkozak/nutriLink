@@ -1,24 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Strona główna</title>
-</head>
-<body>
-<h1>{{ recipe.recipe_name }}</h1>
-{#<div>#}
-{#    <img src="{{ recipe.picture.url }}">#}
-{#</div>#}
-{#{% csrf_token %}#}
-<fieldset>
-    <legend><h1>{{ recipe.recipe_name }}</h1></legend>
-    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-    {% for choice in recipe.choice_set.all %}
-        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
-<br>
-    {% endfor %}
-</fieldset>
+{% extends 'nutriLink/base.html' %}
 
-</body>
-</html>
+{% block title %} {{ recipe.recipe_name }} {% endblock %}
+
+{% block content %}
+<h1 class="mb-6 text-3xl">{{ recipe.recipe_name }}</h1>
+<div class="grid grid-cols-5 gap-6">
+    <div class="col-span-2">
+        <img src="{{ recipe.picture.url }}" class="rounded-xl">
+    </div>
+
+    <div class="col-span-3 p-6 bg-gray-100 rounded-xl">
+        Treść
+    </div>
+</div>
+
+
+{% endblock %}

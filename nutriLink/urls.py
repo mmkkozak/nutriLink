@@ -12,5 +12,7 @@ app_name = 'nutriLink'
 urlpatterns = [
     path("", views.index, name="index"),
 
-    path("contact/", views.contact, name="contact")
+    # path("contact/", views.contact, name="contact"),
+
+    path('<int:pk>/', views.recipe, name="recipe")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

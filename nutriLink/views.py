@@ -146,5 +146,23 @@ def index(request):
         'diets': diets
     })
 
-def contact(request):
-    return render(request, 'nutriLink/contact.html')
+# def contact(request):
+#     return render(request, 'nutriLink/contact.html')
+
+def recipe(request, pk):
+    recipe = get_object_or_404(Recipe, pk=pk)
+    try:
+        selected_recipe = Recipe.objects.get(pk=request.POST["choice"])
+    except (KeyError, Recipe.DoesNotExist):
+        return render(
+            request,
+            "nutriLink/recipe.html",
+            {
+                'recipe': recipe,
+                'error_message': "You didn't select a choice.",
+            },
+        )
+    else:
+        return render(request, 'nutriLink/recipe.html', {
+            'recipe': recipe,
+        })
