@@ -1,18 +1,41 @@
 from django import forms
 from datetime import datetime
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.models import User
 from .models import Recipe
 
 INPUT_CLASSES = 'w-full py-4 px-6 rounded-xl border'
 
-class SignUpForm(forms.Form):
-    user_name = forms.CharField(label="Username", max_length=100)
-    user_email = forms.EmailField(label="E-mail", max_length=100)
-    user_password = forms.CharField(label="Password", max_length=100)
-    password_confirm = forms.CharField(label="Confirm Password", max_length=100)
+class SignupForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ("username", "email", "password1", "password2")
 
-class LoginForm(forms.Form):
-    user_name = forms.CharField(label="Username", max_length=100)
-    user_password = forms.CharField(label="Password", max_length=100)
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        "placeholder": "Your username",
+        "class": 'w-full py-4 px-6 rounded-xl'
+    }))
+
+    email = forms.CharField(widget=forms.EmailInput(attrs={
+        "placeholder": "Your e-mail",
+        "class": 'w-full py-4 px-6 rounded-xl'
+    }))
+
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={
+        "placeholder": "Your password",
+        "class": 'w-full py-4 px-6 rounded-xl'
+    }))
+
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={
+        "placeholder": "Confirm your password",
+        "class": 'w-full py-4 px-6 rounded-xl'
+    }))
+
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        "placeholder": "Your username",
+        "class": 'w-full py-4 px-6 rounded-xl'
+    }))
 
 class NewRecipeForm(forms.ModelForm):
     class Meta:

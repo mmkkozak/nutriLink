@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
-from nutriLink.forms import SignUpForm, LoginForm, NewRecipeForm
+from nutriLink.forms import SignupForm, LoginForm, NewRecipeForm
 from nutriLink.models import Recipe, Diet, User
 
 """
@@ -105,6 +105,21 @@ def index(request):
 
 # def contact(request):
 #     return render(request, 'nutriLink/contact.html')
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect('/login/')
+    else:
+        form = SignupForm()
+
+    return render(request, 'nutriLink/signup.html',{
+        'form': form
+    })
 
 def recipe(request, pk):
     recipe = get_object_or_404(Recipe, pk=pk)
