@@ -1,7 +1,7 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
-# Create your models here.
+
 class User(models.Model):
     name = models.CharField(max_length=30, unique=True)
     email = models.EmailField(max_length=50, unique=True)
@@ -11,8 +11,8 @@ class Recipe(models.Model):
     recipe_name = models.CharField(max_length=150, unique=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     contents = models.TextField()
-    picture = models.ImageField()
-    pub_date = models.DateTimeField()
+    picture = models.ImageField(upload_to='uploads/')
+    pub_date = models.DateTimeField(auto_now_add=True)
 
 class Ingredient(models.Model):
     name = models.CharField(max_length=30, unique=True)
@@ -35,6 +35,7 @@ class RecipeIngredient(models.Model):
 
 class Diet(models.Model):
     diet_name = models.CharField(max_length=100, unique=True)
+    # exclusion
 
 class Exclusion(models.Model):
     diet = models.ForeignKey(Diet, on_delete=models.CASCADE)

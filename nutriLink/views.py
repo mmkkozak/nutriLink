@@ -7,18 +7,12 @@ from nutriLink.forms import SignUpForm, LoginForm, RecipeForm
 from nutriLink.models import Recipe, Diet, User
 
 
-# Create your views here.
-
-# def index(request):
-#     latest_question_list = Question.objects.order_by("-pub_date")[:5]
-#     context = {"latest_question_list": latest_question_list}
-#     return render(request, "polls/index.html", context)
 def index(request):
     recipe_list = Recipe.objects.order_by('-pub_date')
     # recipe_list = Diet.objects.filter()
     templete = loader.get_template('nutriLink/index.html')
     # output = ", ".join([q.diet_name for q in recipe_list])
-    if request.session['user_id'] != "":
+    if 'user_id' in request.session:
         q = User.objects.get(id=request.session['user_id'])
         name = q.name
         context = {'recipe_list': recipe_list, 'user': name, 'user_id': request.session['user_id'], 'action': "nutriLink:logout", 'actionMessage': "Log Out"}
@@ -49,9 +43,9 @@ def user(request, user_id):
     return render(request, "nutriLink/user.html", {'user': user, 'user_id': user_id})
 
 
-def recipe_form(request, user_id):
+def recipe_form(request):
     try:
-        user = User.objects.get(pk=user_id)
+        user = request.user
     except User.DoesNotExist:
         raise Http404('User does not exist')  # NIEZSLOGOWANY UŻYTKOWNIK
     return render(request, "nutriLink/recipe_form.html", {'user': user})
@@ -119,7 +113,7 @@ def verify_user(request):
                 return render(request, "nutriLink/sign_in.html", {"form": form, "message": "Username or password is incorrect"})
 
 
-def new_recipe(request, user_id):
+def new_recipe(request):
     form = RecipeForm(request.POST or None)
     return render(request, 'nutriLink/recipe_form.html', {"form": form, 'user_id': request.session["user_id"]})
 
@@ -132,7 +126,8 @@ def insert_recipe(request, user_id):
             contents = request.POST['contents']
             picture = request.POST['picture']
             pub_date = request.POST['pub_date']
-            new_recipe = Recipe(recipe_name=recipe_name, contents=contents, picture=picture, pub_date=pub_date, user_id=request.session["user_id"])
+            # new_recipe = Recipe(recipe_name=recipe_name, contents=contents, picture=picture, pub_date=pub_date, user_id=request.session["user_id"])
+            new_recipe = Recipe(recipe_name=recipe_name, contents=contents, picture=picture, pub_date=pub_date, user_id=user_id)
             new_recipe.save()
             return render(request, 'nutriLink/recipe_form.html', {"form": form, "message": "New recipe added successfully",'user_id': request.session["user_id"]})
         else:

@@ -6,8 +6,10 @@
 </head>
 <body>
 <h1>{{ recipe.recipe_name }}</h1>
-<form action="{% url 'nutriLink:recipe_form' recipe.id %}" method="post">
-{% csrf_token %}
+{#<div>#}
+{#    <img src="{{ recipe.picture.url }}">#}
+{#</div>#}
+{#{% csrf_token %}#}
 <fieldset>
     <legend><h1>{{ recipe.recipe_name }}</h1></legend>
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
@@ -17,7 +19,6 @@
 <br>
     {% endfor %}
 </fieldset>
-<input type="submit" value="Send">
-</form>
+
 </body>
 </html>

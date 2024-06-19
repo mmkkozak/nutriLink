@@ -2,9 +2,16 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Strona główna</title>
+    <title>Strony głównej</title>
 </head>
-
+<body>
+<nav>
+    <div class="space-x-2 grid grid-cols-3 justify-items-center">
+        <a href={{ action }}>{{ actionMessage }}</a>
+        <a href="/nutriLink/sign_up/">Sign Up</a>
+        <a href="/nutriLink/{{ user_id }}/user/">My Profile</a>
+    </div>
+</nav>
 {% if recipe_list %}
     <ul>
     {% for recipe in recipe_list %}
@@ -16,7 +23,8 @@
 {% endif %}
 <br>
 Zalogowano jako {{ user }}<br>
-<a href="/nutriLink/sign_up/">Sign Up</a><br>
-<a href={{ action }}>{{ actionMessage }}</a><br>
-<a href="/nutriLink/{{ user_id }}/user/">My Profile</a>
+<br>
+
+
+</body>
 </html>
