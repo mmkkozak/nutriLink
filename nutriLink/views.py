@@ -6,7 +6,7 @@ from django.urls import reverse
 from nutriLink.forms import SignUpForm, LoginForm, RecipeForm
 from nutriLink.models import Recipe, Diet, User
 
-
+"""
 def index(request):
     recipe_list = Recipe.objects.order_by('-pub_date')
     # recipe_list = Diet.objects.filter()
@@ -137,3 +137,14 @@ def insert_recipe(request, user_id):
 def logout(request):
     if request.session["user_id"] != "":
         del request.session['user_id']
+        
+"""
+
+def index(request):
+    recipes = Recipe.objects.all()
+    return render(request, 'nutriLink/index.html',{
+        'recipes': recipes
+    })
+
+def contact(request):
+    return render(request, 'nutriLink/contact.html')

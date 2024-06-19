@@ -1,11 +1,13 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+from django.contrib.auth.models import User
 
-
+"""
 class User(models.Model):
     name = models.CharField(max_length=30, unique=True)
     email = models.EmailField(max_length=50, unique=True)
     password = models.CharField(max_length=20)
+"""
 
 class Recipe(models.Model):
     recipe_name = models.CharField(max_length=150, unique=True)
