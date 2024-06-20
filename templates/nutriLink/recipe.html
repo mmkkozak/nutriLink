@@ -8,14 +8,15 @@
 
         <div class="col-span-3 p-6 bg-gray-100 rounded-xl">
             <h1 class="mb-6 text-3xl">{{ recipe.recipe_name }}</h1>
+            <div id="message-container"></div>
             <p class="text-gray-500 text-xs"><strong>Autor: </strong>{{ recipe.user.username }}</p>
             <p class="text-gray-400 text-xs"><strong>Opublikowano: </strong>{{ recipe.pub_date }}</p>
             <br>
             <p>{{ recipe.contents }}</p>
-            <div id="message-container"></div>
+
         </div>
 
-        <div class="col-span-2">
+        <div class="col-span-2" id="recipe_description">
             <img src="{{ recipe.picture.url }}" class="rounded-xl">
 
         </div>
@@ -74,39 +75,32 @@
 
                 <button class="mt-6 py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white" id="opinion-button">Publikuj</button>
             </form>
-            {% if not form.errors and not form.non_field_errors %}
                 <script>
                     document.getElementById('download').addEventListener('click', function(event) {
 
                         var messageContainer = document.getElementById('message-container');
 
-                        // Clear any existing messages
                         messageContainer.innerHTML = '';
 
-                        // Create the message element
                         var message = document.createElement('div');
-                        message.className = "mt-2 p-6 py-2 px-2 ml-auto text-lg bg-green-700 hover:bg-teal-700 rounded-xl text-white";
+                        message.className = "mt-auto p-6 py-2 px-2 text-lg bg-green-700 hover:bg-teal-700 rounded-xl text-white text-center";
                         message.innerText = 'Gratulujemy świetnego wyboru!!';
 
-                        // Add the message to the container
                         messageContainer.appendChild(message);
 
-                        // Fade out the message after 5 seconds
                         setTimeout(function() {
                             message.classList.add('fade-out');
                             setTimeout(function() {
                                 message.style.display = 'none';
-                            }, 1000); // Matches the duration of the CSS transition
-                        }, 5000); // Start fading out after 5 seconds
+                            }, 1000);
+                        }, 5000);
                     });
                 </script>
-            {% endif %}
 
             {% else %}
                 <a href="{% url 'nutriLink:login' %}" class="px-3 py-3 text-lg font-semibold bg-gray-400 text-white rounded-xl hover:bg-gray-500">Zaloguj się, aby ocenić przepis</a>
             {% endif %}
         </div>
     </div>
-
 
 {% endblock %}

@@ -58,8 +58,6 @@ def recipe(request, pk):
             review.recipe = recipe
             review.user = request.user
             review.save()
-            print(f"Review User: {review.user}")
-            print(f"Review Recipe: {review.recipe}")
             return redirect('nutriLink:recipe', pk=pk)
     else:
         form = ReviewForm()

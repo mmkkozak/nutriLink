@@ -11,6 +11,11 @@
             opacity: 0;
             transition: opacity 1s ease-out;
         }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(-100%);
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+        }
     </style>
 </head>
 <body>
@@ -18,7 +23,7 @@
 <nav class="py-6 px-6 flex justify-between items-center border-b border-gray-200">
     <a href="/nutriLink" class="text-xl font-semibold">nutriLink</a>
 
-    <div class="space-x-6">
+    <div class="space-x-6" id="top">
     
             {% if request.user.is_authenticated %}
                 <div class="grid grid-cols-3 justify-items-center">
@@ -63,6 +68,18 @@
         </ul>
     </div>
 </footer>
-
+    <script>
+        // JavaScript to trigger the fade-in animation
+        document.addEventListener('DOMContentLoaded', function() {
+            var animatedDiv = document.getElementById('top');
+            animatedDiv.classList.add('fade-in');
+            // Delay the animation start slightly for effect
+            setTimeout(function() {
+                animatedDiv.style.opacity = '1';
+                animatedDiv.style.transform = 'translateY(0)';
+            }, 100);
+        });
+    </script>
+</script>
 </body>
 </html>
