@@ -109,6 +109,9 @@ def recipe_text(request, pk):
     response = HttpResponse(content_type='text/plain')
     response['Content-Disposition'] = 'attachment; filename=Recipe.txt'
     q = Recipe.objects.get(id=pk)
+    ingredients = q.recipe_name
+    response.writelines(ingredients)
+    response.writelines("\n\n")
     ingredients = q.contents
     response.writelines(ingredients)
     return response

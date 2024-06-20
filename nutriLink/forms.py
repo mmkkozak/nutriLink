@@ -34,7 +34,7 @@ class SignupForm(UserCreationForm):
 class LoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={
         "placeholder": "Nazwa użytkownika",
-        "class": 'w-full py-4 px-6 rounded-xl'
+        "class": 'w-full py-4 px-6 rounded-xl',
     }))
     password = forms.CharField(widget=forms.PasswordInput(attrs={
         'placeholder': 'Hasło',
@@ -60,6 +60,12 @@ class NewRecipeForm(forms.ModelForm):
                 'placeholder': 'dieta',
                 'class': INPUT_CLASSES
             }),
+        }
+        labels = {
+            'recipe_name': "Nazwa przepisu",
+            'contents': "Treść",
+            'picture': "Zdjęcie",
+            'tag': "Tag (dieta)",
         }
 
 class ReviewForm(forms.ModelForm):
