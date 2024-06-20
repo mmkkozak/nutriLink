@@ -17,7 +17,8 @@ def index(request):
     else:
         recipes = Recipe.objects.all()
 
-    paginator = Paginator(recipes, 3)
+    page_q = request.GET.get('page_q', '3')
+    paginator = Paginator(recipes, page_q)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
@@ -31,6 +32,7 @@ def index(request):
         'diets': diets,
         'query': query,
         'page_obj': page_obj,
+        'page': page_number,
     })
 
 def signup(request):

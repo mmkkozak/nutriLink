@@ -3,23 +3,30 @@
 {% block title %} Strona główna {% endblock %}
 
 {% block content %}
-    <div class="mt-6 px-6 py-6 bg-gray-100 rounded-xl">
+    <div class="mt-6 px-6 py-6 bg-gray-100 rounded-xl flex justify-center">
 
         <div class="grid grid-cols-2 gap-3">
-        
-            <select name="dietlist" form="filter" class="py-2 px-2 rounded-xl">
-                <option value="">--wybierz dietę--</option>
-                {% for diet in diets %}
-                    <option value="{{ diet.diet_name }}" {% if diet.diet_name == query %} selected {% endif %}>
-                        {{ diet.diet_name }}
-                    </option>
-                {% endfor %}
-            </select>
-        
-            <form method="get" action="{% url 'nutriLink:index' %}" id="filter">
-                <button class="mt-2 py-4 px-8 text-lg bg-gray-500 text-white rounded-xl">Filtruj</button>
-            </form>
-{#            <div>{{ query }}</div>#}
+            <div class="grid grid-cols-2 gap-3">
+                <select name="dietlist" form="filter" class="py-2 px-2 rounded-xl">
+                    <option value="">--wybierz dietę--</option>
+                    {% for diet in diets %}
+                        <option value="{{ diet.diet_name }}" {% if diet.diet_name == query %} selected {% endif %}>
+                            {{ diet.diet_name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <form method="get" action="{% url 'nutriLink:index' %}" id="filter">
+                    <button class="mt-2 py-4 px-8 text-lg bg-gray-500 text-white rounded-xl">Filtruj</button>
+                </form>
+            </div>
+
+            <div class="grid gap-3 justify-end place-content-center">
+                <form method="get" action="{% url 'nutriLink:index' %}" id="paginator">
+                    <input type="number" name="page_q" value="{{ page_q }}" placeholder="3" min="1" class="mt-2 py-1 px-3 w-1/5">
+                    <button class="mt-2 py-2 px-6 text-sm bg-gray-300  rounded-xl">Wybierz liczbę obiektów na stronie</button>
+                </form>
+            </div>
+
         </div>
     </div>
     
