@@ -6,7 +6,7 @@
     <div class="mt-6 px-6 py-6 bg-gray-100 rounded-xl">
 
         <div class="grid grid-cols-2 gap-3">
-{#            The drop-down list is defined outside the form element, but will be submitted with the form.#}
+        
             <select name="dietlist" form="filter" class="py-2 px-2 rounded-xl">
                 <option>--wybierz dietę--</option>
                 {% for diet in diets %}
@@ -32,7 +32,7 @@
                             <h2 class="text-2xl font-semibold">{{ item.recipe_name }}</h2>
                         </div>
                         <div>
-                            <img src="{{ item.picture.url }}" class="rounded-t-xl" width="500px">
+                            <img src="{{ item.picture.url }}" class="rounded-xl" width="500px">
                         </div>
                     </a>
                 </div>

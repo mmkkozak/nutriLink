@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-from nutriLink.forms import SignupForm, LoginForm, NewRecipeForm
+from nutriLink.forms import SignupForm, LoginForm, NewRecipeForm, ReviewForm
 from nutriLink.models import Recipe, Diet, Review, Exclusion
 
 
@@ -43,15 +43,26 @@ def signup(request):
 def recipe(request, pk):
     recipe = get_object_or_404(Recipe, pk=pk)
     reviews = Review.objects.filter(recipe=recipe)
+
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.recipe = recipe
+            review.user = request.user
+            review.save()
+            return redirect('nutriLink:recipe', pk=pk)
+    else:
+        form = ReviewForm()
+
     try:
         return render(request, 'nutriLink/recipe.html', {
             'recipe': recipe,
+            'reviews': reviews,
+            'form': form,
         })
     except (KeyError, Recipe.DoesNotExist):
-        return render(
-            request,
-            "nutriLink/recipe.html",
-            {
+        return render(request,"nutriLink/recipe.html",{
                 'recipe': recipe,
                 'error_message': "Przepis nie istnieje.",
                 'reviews': reviews,

@@ -18,6 +18,7 @@ urlpatterns = [
 
     path('new/', views.new_recipe, name="new_recipe"),
     path('<int:pk>/', views.recipe, name="recipe"),
+
     path('profile/', views.profile, name="user"),
 
 ]
