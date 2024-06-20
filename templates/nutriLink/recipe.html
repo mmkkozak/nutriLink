@@ -16,12 +16,13 @@
 
         <div class="col-span-2">
             <img src="{{ recipe.picture.url }}" class="rounded-xl">
+            <div id="message-container"></div>
         </div>
 
     <a href="{% url 'nutriLink:recipe_text' recipe.id %}">
-            <button class="mt-2 py-2 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white" id="download">Pobierz przepis</button>
+            <button class="mt-2 py-2 px-4 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white" id="download">Pobierz przepis</button>
     </a>
-    <div id="message-container"></div>
+
 
     </div>
 
@@ -83,7 +84,7 @@
 
                         // Create the message element
                         var message = document.createElement('div');
-                        message.className = "mt-2 p-6 py-2 px-2 text-lg bg-green-700 hover:bg-teal-700 rounded-xl text-white";
+                        message.className = "mt-2 p-6 py-2 px-2 ml-auto text-lg bg-green-700 hover:bg-teal-700 rounded-xl text-white";
                         message.innerText = 'Gratulujemy świetnego wyboru!!';
 
                         // Add the message to the container
