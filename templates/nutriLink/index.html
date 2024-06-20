@@ -6,11 +6,17 @@
     <div class="mt-6 px-6 py-6 bg-gray-100 rounded-xl">
         <h3 class="mb-12 text-2xl text-center">Wybierz dietę</h3>
 
+<<<<<<< Updated upstream
         <div class="grid grid-cols-3 gap-3">
             
 {#            The drop-down list is defined outside the form element, but will be submitted with the form.#}
             <label for="diets">Filtruj:</label>
             <select id="diets" name="dietlist" form="#">
+=======
+        <div class="grid grid-cols-2 gap-3">
+
+            <select name="dietlist" form="filter" class="py-2 px-2 rounded-xl">
+>>>>>>> Stashed changes
                 <option>--wybierz dietę--</option>
                 {% for diet in diets %}
                     <option value="{{ diet.diet_id }}">{{ diet.diet_name }}</option>
@@ -35,7 +41,37 @@
                         </div>
                     </a>
                 </div>
+<<<<<<< Updated upstream
             {% endfor %}
+=======
+          {% endfor %}
+        </div>
+
+        <div class="pagination">
+            <span class="step-links">
+            <p class="text-sm">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">Poprzednia strona <<</a>
+                {% else %}
+                    <a>Poprzednia strona <<</a>
+                {% endif %}
+
+                {% for i in page_obj.paginator.page_range %}
+                    {% if page_obj.number == i %}
+                    <a href="#">{{ i }} </a>
+                    {% else %}
+                    <a href="?page={{ i }}">{{ i }}</a>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">>> Następna strona</a>
+                {% else %}
+                    <a>>> Następna strona</a>
+                {% endif %}
+            </p>
+            </span>
+>>>>>>> Stashed changes
         </div>
     </div>
 {% endblock %}

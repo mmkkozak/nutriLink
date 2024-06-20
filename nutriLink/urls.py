@@ -17,5 +17,14 @@ urlpatterns = [
 path('login/', auth_views.LoginView.as_view(template_name='nutriLink/login.html', authentication_form=LoginForm), name='login'),
     path('new/', views.new_recipe, name="new_recipe"),
     path('<int:pk>/', views.recipe, name="recipe"),
+<<<<<<< Updated upstream
     path('profile/', views.profile, name="user")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+=======
+
+    path('profile/', views.profile, name="user"),
+
+    path('recipe_text/<int:pk>/', views.recipe_text, name="recipe_text")
+
+]
+>>>>>>> Stashed changes
