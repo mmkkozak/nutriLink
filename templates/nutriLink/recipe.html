@@ -10,8 +10,10 @@
             <h1 class="mb-6 text-3xl">{{ recipe.recipe_name }}</h1>
             <p class="text-gray-500 text-xs"><strong>Autor: </strong>{{ recipe.user.username }}</p>
             <p class="text-gray-400 text-xs"><strong>Opublikowano: </strong>{{ recipe.pub_date }}</p>
+{#            <br>#}
+            <p class="text-gray-400 text-xs"><strong>Dieta: </strong>{{ recipe.tag }}</p>
             <br>
-            <p>{{ recipe.contents }}</p>
+            <p style="white-space: pre-line;">{{ recipe.contents }}</p>
         </div>
 
         <div class="col-span-2">

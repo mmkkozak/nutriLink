@@ -44,7 +44,7 @@ class LoginForm(AuthenticationForm):
 class NewRecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
-        fields = ('recipe_name', 'contents', 'picture')
+        fields = ('recipe_name', 'contents', 'picture', 'tag')
 
         widgets = {
             'recipe_name': forms.TextInput(attrs={
@@ -56,6 +56,10 @@ class NewRecipeForm(forms.ModelForm):
             # 'picture': forms.FileInput(attrs={
             #     'class': INPUT_CLASSES
             # })
+            'tag': forms.TextInput(attrs={
+                'placeholder': 'dieta',
+                'class': INPUT_CLASSES
+            }),
         }
 
 class ReviewForm(forms.ModelForm):

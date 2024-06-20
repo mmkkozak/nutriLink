@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from django.urls import reverse
+from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from nutriLink.forms import SignupForm, LoginForm, NewRecipeForm, ReviewForm
@@ -18,7 +18,7 @@ def index(request):
     page_obj = paginator.get_page(page_number)
 
     if query:
-        recipes = recipes.filter()
+        recipes = recipes.filter(Q(tag__icontains=query) | Q(contents__icontains=query))
 
     if request.method == 'POST':
         logout(request)
