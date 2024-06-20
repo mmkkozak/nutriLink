@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
@@ -100,3 +101,11 @@ def profile(request):
     return render(request, 'nutriLink/user.html', {
         'recipes': recipes,
     })
+
+def recipe_text(request, pk):
+    response = HttpResponse(content_type='text/plain')
+    response['Content-Disposition'] = 'attachment; filename=Recipe.txt'
+    q = Recipe.objects.get(id=pk)
+    ingredients = q.contents
+    response.writelines(ingredients)
+    return response

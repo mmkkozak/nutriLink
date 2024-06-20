@@ -21,4 +21,6 @@ urlpatterns = [
 
     path('profile/', views.profile, name="user"),
 
+    path('recipe_text/<int:pk>/', views.recipe_text, name="recipe_text")
+
 ]

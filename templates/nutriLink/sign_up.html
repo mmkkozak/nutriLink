@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action = "{% url 'nutriLink:insert_user' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+</form>
+<br>
+{{ message }}
+<br>
+<a href="/nutriLink/">Return to main page</a>
+</body>
+</html>
