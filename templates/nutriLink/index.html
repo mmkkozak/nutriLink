@@ -8,9 +8,11 @@
         <div class="grid grid-cols-2 gap-3">
         
             <select name="dietlist" form="filter" class="py-2 px-2 rounded-xl">
-                <option>--wybierz dietę--</option>
+                <option value="">--wybierz dietę--</option>
                 {% for diet in diets %}
-                    <option value="{{ diet.diet_name }}">{{ diet.diet_name }}</option>
+                    <option value="{{ diet.diet_name }}" {% if diet.diet_name == query %} selected {% endif %}>
+                        {{ diet.diet_name }}
+                    </option>
                 {% endfor %}
             </select>
         

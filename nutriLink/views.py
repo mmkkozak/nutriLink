@@ -9,16 +9,17 @@ from django.core.paginator import Paginator
 
 
 def index(request):
-    recipes = Recipe.objects.all()
     diets = Diet.objects.all()
     query = request.GET.get('dietlist', '')
+
+    if not query=="":
+        recipes = Recipe.objects.filter(Q(tag__icontains=query) | Q(contents__icontains=query))
+    else:
+        recipes = Recipe.objects.all()
 
     paginator = Paginator(recipes, 3)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
-
-    if query:
-        recipes = recipes.filter(Q(tag__icontains=query) | Q(contents__icontains=query))
 
     if request.method == 'POST':
         logout(request)
