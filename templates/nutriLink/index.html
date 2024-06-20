@@ -4,57 +4,74 @@
 
 {% block content %}
     <div class="mt-6 px-6 py-6 bg-gray-100 rounded-xl">
+        <h3 class="mb-12 text-2xl text-center">Wybierz dietę</h3>
 
+<<<<<<< Updated upstream
+        <div class="grid grid-cols-3 gap-3">
+            
+{#            The drop-down list is defined outside the form element, but will be submitted with the form.#}
+            <label for="diets">Filtruj:</label>
+            <select id="diets" name="dietlist" form="#">
+=======
         <div class="grid grid-cols-2 gap-3">
-        
+
             <select name="dietlist" form="filter" class="py-2 px-2 rounded-xl">
+>>>>>>> Stashed changes
                 <option>--wybierz dietę--</option>
                 {% for diet in diets %}
-                    <option value="{{ diet.id }}">{{ diet.diet_name }}</option>
+                    <option value="{{ diet.diet_id }}">{{ diet.diet_name }}</option>
                 {% endfor %}
             </select>
-        
-            <form method="get" action="{% url 'nutriLink:index' %}" id="filter">
-                <button class="mt-2 py-4 px-8 text-lg bg-gray-500 text-white rounded-xl">Filtruj</button>
-            </form>
-            
         </div>
     </div>
     
     <div class="mt-6 px-6 py-6 bg-gray-100 rounded-xl">
         <h2 class="mb-12 text-2xl text-center">Przepisy</h2>
-            
+
         <div class="grid grid-cols-3 gap-3">
-            {% for item in page_obj %}
+            {% for item in recipes %}
                 <div>
                     <a href="{% url 'nutriLink:recipe' item.id %}">
                         <div class="p-6 bg-white rounded-t-xl">
-                            <h2 class="text-2xl font-semibold">{{ item.recipe_name }}</h2>
+                            <h2 class="text-2xl">{{ item.recipe_name }}</h2>
                         </div>
                         <div>
-                            <img src="{{ item.picture.url }}" class="rounded-xl" width="500px">
+                            <img src="nutriLink/{{ item.picture.url }}" class="rounded-t-xl">
+{#                            <img src="https://smakoholik.pl/wp-content/uploads/jajecznica.jpg" class="rounded-t-xl">#}
                         </div>
                     </a>
                 </div>
+<<<<<<< Updated upstream
+            {% endfor %}
+=======
           {% endfor %}
         </div>
-    
-        <div class="pagination grid grid-cols-5 gap-3">
+
+        <div class="pagination">
             <span class="step-links">
+            <p class="text-sm">
                 {% if page_obj.has_previous %}
-                    <a href="?page=1">&laquo; first</a>
-                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">Poprzednia strona <<</a>
+                {% else %}
+                    <a>Poprzednia strona <<</a>
                 {% endif %}
-        
-                <span class="current">
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                </span>
-        
+
+                {% for i in page_obj.paginator.page_range %}
+                    {% if page_obj.number == i %}
+                    <a href="#">{{ i }} </a>
+                    {% else %}
+                    <a href="?page={{ i }}">{{ i }}</a>
+                    {% endif %}
+                {% endfor %}
+
                 {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}">next</a>
-                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                    <a href="?page={{ page_obj.next_page_number }}">>> Następna strona</a>
+                {% else %}
+                    <a>>> Następna strona</a>
                 {% endif %}
+            </p>
             </span>
+>>>>>>> Stashed changes
         </div>
     </div>
 {% endblock %}
