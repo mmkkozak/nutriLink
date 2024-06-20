@@ -55,6 +55,24 @@
                     {{ form.as_p }}
                 </div>
 
+                <div class="mb-3 p-6 bg-green-100 rounded-xl" id="message-container">
+                        Dodano ocenę!
+                </div>
+
+                        <script>
+                            document.getElementById('opinion-button').addEventListener('click', function() {
+                                setTimeout(function () {
+                                    var messageContainer = document.getElementById('message-container');
+                                    if (messageContainer) {
+                                        messageContainer.classList.add('fade-out')
+                                        setTimeout(function () {
+                                            messageContainer.style.display = 'none';
+                                        }, 1000);
+                                    }
+                                }, 5000);
+                            });// Vanishes after 5 seconds
+                        </script>
+
                 {% if form.errors or form.non_field_errors %}
                     <div class="mb-3 p-6 bg-red-100 rounded-xl">
                         {% for field in form %}
@@ -63,9 +81,11 @@
 
                         {{ form.non_field_errors }}
                     </div>
+
                 {% endif %}
 
-                <button class="mt-6 py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">Publikuj</button>
+
+                <button class="mt-6 py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white" id="opinion-button">Publikuj</button>
             </form>
         
             {% else %}
