@@ -4,12 +4,17 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from nutriLink.forms import SignupForm, LoginForm, NewRecipeForm, ReviewForm
 from nutriLink.models import Recipe, Diet, Review, Exclusion
+from django.core.paginator import Paginator
 
 
 def index(request):
     recipes = Recipe.objects.all()
     diets = Diet.objects.all()
     query = request.GET.get('dietlist', '')
+
+    paginator = Paginator(recipes, 3)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
 
     if query:
         recipes = recipes.filter()
@@ -23,6 +28,7 @@ def index(request):
         'recipes': recipes,
         'diets': diets,
         'query': query,
+        'page_obj': page_obj,
     })
 
 def signup(request):
@@ -31,7 +37,7 @@ def signup(request):
 
         if form.is_valid():
             form.save()
-            return redirect('nutriLink/login/')
+            return redirect('/nutriLink/login/')
 
     else:
         form = SignupForm()
