@@ -12,11 +12,12 @@
             <p class="text-gray-400 text-xs"><strong>Opublikowano: </strong>{{ recipe.pub_date }}</p>
             <br>
             <p>{{ recipe.contents }}</p>
+            <div id="message-container"></div>
         </div>
 
         <div class="col-span-2">
             <img src="{{ recipe.picture.url }}" class="rounded-xl">
-            <div id="message-container"></div>
+
         </div>
 
     <a href="{% url 'nutriLink:recipe_text' recipe.id %}">
